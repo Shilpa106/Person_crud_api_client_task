@@ -53,7 +53,8 @@ SWAGGER_SETTINGS = {
         }
     }
 }
-REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' }
+REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema',
+                  'DEFAULT_METADATA_CLASS': 'rest_framework.metadata.SimpleMetadata'}
 
 
 MIDDLEWARE = [

@@ -20,7 +20,7 @@ from api.views import *
 from rest_framework import permissions
 from drf_yasg import openapi
 from rest_framework.schemas import get_schema_view
-
+# from api.schema_d import schema
 
 
 urlpatterns = [
@@ -34,5 +34,10 @@ urlpatterns = [
         title="Persons",
         version="1.0.0"
     ),  name='openapi-schema',),
+    
+    # path('v1/openapi', get_schema_view(generator_class=schema.SchemaGenerator, public=True),
+    #      name='openapi-schema'),
+
+
     
 ]

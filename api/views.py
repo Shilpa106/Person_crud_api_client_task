@@ -17,8 +17,54 @@ import coreapi
 import coreschema
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework import renderers, response
+
+
+from rest_framework.schemas import SchemaGenerator# field_to_schema
+from rest_framework import serializers
+import coreschema, coreapi
+
+class ResponseMetaSchemaGenerator(SchemaGenerator):
+    def get_operation_id(self, operation_keys):
+      operation_id = 'shilpi'
+      return operation_id
+
+
+    # def get_response_fields(self, path, method, view):
+    #     """
+    #     return field descriptions for the response
+    #     """
+    #     if not hasattr(view, 'get_serializer'):
+    #         return []
+
+    #     serializer = view.get_serializer()
+
+    #     if not isinstance(serializer, serializers.Serializer):
+    #         return []
+
+    #     fields = []
+    #     for field in serializer.fields.values():
+    #         if field.write_only:
+    #             continue
+
+    #         field = coreapi.Field(
+    #             name=field.field_name,
+    #             location='response',
+    #             required=False,
+    #             schema=field_to_schema(field)
+    #         )
+    #         fields.append(field)
+
+    #     return fields
+
+    def get_link(self, path, method, view):
+        link = super(ResponseMetaSchemaGenerator, self).get_link(path, method, view)
+        link._fields = link._fields + tuple(self.get_response_fields(path, method, view))
+        return link
+
 class PersonApiView(APIView):
-    
+    schema = ResponseMetaSchemaGenerator()
+    # metadata_class = PersonApiViewMetadata
+  
 
 
     def get(self, request, *args, **kwargs):
@@ -87,6 +133,7 @@ class PersonApiView(APIView):
 
 
 class PersonDetailView(APIView):
+    # metadata_class = APIRootMetadata
     def get(self, request, *args, **kwargs):
 
         '''
